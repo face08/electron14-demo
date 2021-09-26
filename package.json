@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "debug": "electron --inspect-brk index.js"
+    "debug": "electron  --inspect=9222 ."
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,12 @@
   "homepage": "https://github.com/face08/electron14-demo#readme",
   "devDependencies": {
     "electron": "^14.0.1"
+  },
+  "dependencies": {
+    "electron-store": "^8.0.1",
+    "node-mac-permissions": "^2.2.0",
+    "os-utils": "0.0.14",
+    "v8-inspect-profiler": "0.0.22",
+    "v8-profiler-next": "^1.4.2"
   }
 }

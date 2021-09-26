@@ -1,8 +1,13 @@
-// main.js
-
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, systemPreferences} = require('electron')
 const path = require('path')
+const {nextProfile} = require("./src/utils/nextProfile");
+const {faceProfile} = require("./src/utils/faceProfile");
+// const {testProfile} = require("./src/utils/profile");
+
+// testProfile().then(t => {
+//     console.log('create profile')
+// });
 
 function createWindow() {
     // Create the browser window.
@@ -10,15 +15,17 @@ function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true
         }
     })
-
+    mainWindow.webContents.openDevTools()
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -41,5 +48,35 @@ app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit()
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+// nextProfile();
+
+faceProfile();
+
+async function test() {
+    let a = await systemPreferences.askForMediaAccess('microphone')
+    console.log('mmmm', a);
+}
+
+
+function testShare() {
+    try {
+        console.log('checkPermission', 'enter');
+        const permissions = require('node-mac-permissions');
+        if (permissions.getAuthStatus('screen') !== 'authorized') {
+            permissions.askForScreenCaptureAccess();
+        }
+        console.log('checkPermission', permissions.getAuthStatus('screen'));
+        return permissions.getAuthStatus('screen') === 'authorized';
+    } catch {
+        return false;
+    }
+}
+
+
+// test();
+
+testShare();
+
+const Store = require('electron-store');
+
+Store.initRenderer();
