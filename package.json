@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "debug": "electron  --remote-debugging-port=9222 . error"
+    "debug": "electron --inspect-brk=9222 ."
   },
   "repository": {
     "type": "git",
