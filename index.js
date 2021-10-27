@@ -25,6 +25,7 @@ function createWindow() {
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
 
+
     // Open the DevTools.
 }
 
@@ -48,6 +49,9 @@ app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit()
 })
 
+app.on('before-quit', (event) => {
+})
+
 // nextProfile();
 
 faceProfile();
@@ -57,26 +61,11 @@ async function test() {
     console.log('mmmm', a);
 }
 
-
-function testShare() {
-    try {
-        console.log('checkPermission', 'enter');
-        const permissions = require('node-mac-permissions');
-        if (permissions.getAuthStatus('screen') !== 'authorized') {
-            permissions.askForScreenCaptureAccess();
-        }
-        console.log('checkPermission', permissions.getAuthStatus('screen'));
-        return permissions.getAuthStatus('screen') === 'authorized';
-    } catch {
-        return false;
-    }
-}
-
-
-// test();
-
-testShare();
-
 const Store = require('electron-store');
 
 Store.initRenderer();
+
+let a = app.getPath('userData')
+console.log(a);
+
+
